@@ -2,6 +2,9 @@
 import { memo, useCallback, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
+// Components
+import FinalStep from '../../components/FinalStep';
+
 // State
 import specialModalState from '../../state/specialModal';
 
@@ -17,6 +20,7 @@ import { initialSpecial, points, specialData } from '../../constants/index';
 const SpecialModal = () => {
 	const [availablePoints, setAvailablePoints] = useState(points);
 	const [special, setSpecial] = useState(initialSpecial);
+	const [showLastStep, setShowLastStep] = useState(false);
 	const [currentAbility, setCurrentAbility] = useState('default');
 	const [name, setName] = useState('');
 	const [isOpen, setIsOpen] = useRecoilState(specialModalState);
@@ -25,15 +29,16 @@ const SpecialModal = () => {
 		setName('');
 		setSpecial(initialSpecial);
 		setAvailablePoints(points);
+		setShowLastStep(false);
 	}, []);
 
 	const handleCloseModal = useCallback(() => {
 		setIsOpen(!isOpen);
-		setInitValues()
-	}, [isOpen, setInitValues, setIsOpen])
+		setInitValues();
+	}, [isOpen, setInitValues, setIsOpen]);
 
 	const handleChangeName = useCallback((el) => {
-		setName(el.target.value)
+		setName(el.target.value);
 	}, []);
 
 	// Increment function
@@ -48,14 +53,14 @@ const SpecialModal = () => {
 			if (item.id === id) {
 				return {
 					...item,
-					value: item.value + 1
-				}
+					value: item.value + 1,
+				};
 			}
 			return item;
 		}));
 
 		setAvailablePoints(prevState => prevState - 1);
-	}, [availablePoints])
+	}, [availablePoints]);
 
 	// Decrement function
 	const handleDecrement = useCallback((id) => {
@@ -64,8 +69,8 @@ const SpecialModal = () => {
 			if (item.id === id) {
 				return {
 					...item,
-					value: item.value > 1 ? item.value - 1 : 1
-				}
+					value: item.value > 1 ? item.value - 1 : 1,
+				};
 			}
 			return item;
 		}));
@@ -77,7 +82,7 @@ const SpecialModal = () => {
 			}
 			return prevState + 1;
 		});
-	}, [special])
+	}, [special]);
 
 	if (!isOpen) {
 		return null;
@@ -96,51 +101,65 @@ const SpecialModal = () => {
 									onClick={handleCloseModal}
 							/>
 						</div>
-						<div className="special-modal__body">
-							<div className="special-modal__left">
-								<div className="input-block">
-									<label htmlFor="name">Name:</label>
-									<input
-											type="text"
-											id="name"
-											onChange={handleChangeName}
-											value={name}
-									/>
-								</div>
-								{special.map((item) => (
-										<div key={item.id} className="input-block">
-											<label>{item.label}:</label>
-											<div className='input-controller'>
-												<span
-														className='decrement'
-														onClick={() => handleDecrement(item.id)}
-												/>
-												<span className='special-value'>{item.value}</span>
-												<span
-														className='increment'
-														onClick={() => handleIncrement(item.id)}
+						{showLastStep ? <FinalStep/> : (
+								<>
+									<div className="special-modal__body">
+										<div className="special-modal__left">
+											<div className="input-block">
+												<label htmlFor="name">Name:</label>
+												<input
+														type="text"
+														id="name"
+														onChange={handleChangeName}
+														value={name}
 												/>
 											</div>
+											{special.map((item) => (
+													<div key={item.id} className="input-block">
+														<label>{item.label}:</label>
+														<div className="input-controller">
+												<span
+														className="decrement"
+														onClick={() => handleDecrement(item.id)}
+												/>
+															<span
+																	className="special-value">{item.value}</span>
+															<span
+																	className="increment"
+																	onClick={() => handleIncrement(item.id)}
+															/>
+														</div>
+													</div>
+											))}
+											<div className="available-points-block">
+												<span>{availablePoints}</span>
+												<span>Points Available</span>
+											</div>
 										</div>
-									))}
-								<div className="available-points-block">
-									<span>{availablePoints}</span>
-									<span>Points Available</span>
-								</div>
-							</div>
-							<div className="special-modal__right">
-								{specialData[currentAbility] ? (
-										<>
-											<img src={specialData[currentAbility].img} alt={currentAbility}/>
-											<p className='desc'>{specialData[currentAbility].desc}</p>
-										</>
-								) : null}
-							</div>
-						</div>
+										<div className="special-modal__right">
+											{specialData[currentAbility] ? (
+													<>
+														<img src={specialData[currentAbility].img}
+														     alt={currentAbility}/>
+														<p className="desc">{specialData[currentAbility].desc}</p>
+													</>
+											) : null}
+										</div>
+									</div>
+									<div className="special-modal__footer">
+										<button
+												onClick={() => setShowLastStep(prevState => !prevState)}
+												className="accept"
+										>
+											Accept
+										</button>
+									</div>
+								</>
+						)}
 					</div>
 				</div>
 			</div>
-	)
-}
+	);
+};
 
 export default memo(SpecialModal);
