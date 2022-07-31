@@ -30,6 +30,7 @@ const SpecialModal = () => {
 		setSpecial(initialSpecial);
 		setAvailablePoints(points);
 		setShowLastStep(false);
+		setCurrentAbility('default');
 	}, []);
 
 	const handleCloseModal = useCallback(() => {
