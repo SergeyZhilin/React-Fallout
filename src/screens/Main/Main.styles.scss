@@ -1,3 +1,31 @@
 .main-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
 
+  .lets-start {
+    background: #6F97F6;
+    border-radius: 4px;
+    border: unset;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    height: 56px;
+    line-height: 24px;
+    position: relative;
+    z-index: 50;
+  }
+
+  &__special-block {
+    display: flex;
+    justify-content: center;
+
+    .special {
+      position: absolute;
+      top: 65px;
+    }
+  }
 }
