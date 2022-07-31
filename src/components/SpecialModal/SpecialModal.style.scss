@@ -129,6 +129,11 @@
       padding: 12px 32px;
       color: #fff;
       cursor: pointer;
+
+      &:disabled {
+        background: #F7F7F7;
+        color: #D8D8D8;
+      }
     }
   }
 }

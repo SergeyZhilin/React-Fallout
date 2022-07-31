@@ -148,6 +148,7 @@ const SpecialModal = () => {
 									</div>
 									<div className="special-modal__footer">
 										<button
+												disabled={availablePoints > 0 || name.length === 0 }
 												onClick={() => setShowLastStep(prevState => !prevState)}
 												className="accept"
 										>
