@@ -33,6 +33,7 @@
 
   &__body {
     display: flex;
+    justify-content: space-between;
     margin-top: 20px;
 
     .special-modal__left {
@@ -86,6 +87,17 @@
             cursor: pointer;
           }
         }
+      }
+    }
+
+    .special-modal__right {
+      margin-left: 75px;
+
+      .desc {
+        color: #5C5C5C;
+        width: 420px;
+        font-size: 12px;
+        line-height: 20px;
       }
     }
 

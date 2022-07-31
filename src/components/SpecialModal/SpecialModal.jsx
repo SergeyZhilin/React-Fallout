@@ -1,5 +1,9 @@
 // Modules
 import { memo, useCallback, useState } from 'react';
+import { useRecoilState } from 'recoil';
+
+// State
+import specialModalState from '../../state/specialModal';
 
 // Images
 import CloseIcon from '../../assets/img/close-icon.svg';
@@ -7,53 +11,26 @@ import CloseIcon from '../../assets/img/close-icon.svg';
 // Styles
 import './SpecialModal.style.scss';
 
-const initialSpecial = [
-	{
-		id: 'strength',
-		label: 'Strength',
-		value: 1
-	},
-	{
-		id: 'perception',
-		label: 'Perception',
-		value: 1
-	},
-	{
-		id: 'endurance',
-		label: 'Endurance',
-		value: 1
-	},
-	{
-		id: 'charisma',
-		label: 'Charisma',
-		value: 1
-	},
-	{
-		id: 'intelligence',
-		label: 'Intelligence',
-		value: 1
-	},
-	{
-		id: 'agility',
-		label: 'Agility',
-		value: 1
-	},
-	{
-		id: 'luck',
-		label: 'Luck',
-		value: 1
-	},
-]
+//Constants
+import { initialSpecial, points, specialData } from '../../constants/index';
 
 const SpecialModal = () => {
-	const [availablePoints, setAvailablePoints] = useState(40);
+	const [availablePoints, setAvailablePoints] = useState(points);
 	const [special, setSpecial] = useState(initialSpecial);
+	const [currentAbility, setCurrentAbility] = useState('');
 	const [name, setName] = useState('');
-	const modalState = false;
+	const [isOpen, setIsOpen] = useRecoilState(specialModalState);
+
+	const setInitValues = useCallback(() => {
+		setName('');
+		setSpecial(initialSpecial);
+		setAvailablePoints(points);
+	}, []);
 
 	const handleCloseModal = useCallback(() => {
-		console.log('Close modal');
-	}, [])
+		setIsOpen(!isOpen);
+		setInitValues()
+	}, [isOpen, setInitValues, setIsOpen])
 
 	const handleChangeName = useCallback((el) => {
 		setName(el.target.value)
@@ -61,6 +38,8 @@ const SpecialModal = () => {
 
 	// Increment function
 	const handleIncrement = useCallback((id) => {
+		setCurrentAbility(id);
+
 		if (availablePoints === 0) {
 			return;
 		}
@@ -80,6 +59,7 @@ const SpecialModal = () => {
 
 	// Decrement function
 	const handleDecrement = useCallback((id) => {
+		setCurrentAbility(id);
 		setSpecial(prevState => prevState.map((item) => {
 			if (item.id === id) {
 				return {
@@ -99,7 +79,7 @@ const SpecialModal = () => {
 		});
 	}, [special])
 
-	if (modalState) {
+	if (!isOpen) {
 		return null;
 	}
 
@@ -149,7 +129,12 @@ const SpecialModal = () => {
 								</div>
 							</div>
 							<div className="special-modal__right">
-
+								{specialData[currentAbility] ? (
+										<>
+											<img src={specialData[currentAbility].img} alt={currentAbility}/>
+											<p className='desc'>{specialData[currentAbility].desc}</p>
+										</>
+								) : null}
 							</div>
 						</div>
 					</div>

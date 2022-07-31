@@ -1,5 +1,9 @@
 // Modules
 import { memo, useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+
+// State
+import specialModalState from '../../state/specialModal';
 
 // Images
 import Special from '../../assets/img/special.png';
@@ -8,10 +12,11 @@ import Special from '../../assets/img/special.png';
 import './Main.styles.scss';
 
 const MainPageContainer = () => {
+	const [isOpen, setIsOpen] = useRecoilState(specialModalState);
 
 	const handleModalOpen = useCallback(() => {
-		console.log('open  modal')
-	}, []);
+		setIsOpen(!isOpen);
+	}, [isOpen, setIsOpen]);
 
 	return (
 			<div className="main-page">
