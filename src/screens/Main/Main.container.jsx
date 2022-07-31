@@ -1,15 +1,24 @@
+// Modules
+import { memo, useCallback } from 'react';
+
 // Images
 import Special from '../../assets/img/special.png';
+
 // Styles
 import './Main.styles.scss';
 
 const MainPageContainer = () => {
+
+	const handleModalOpen = useCallback(() => {
+		console.log('open  modal')
+	}, []);
+
 	return (
 			<div className="main-page">
 				<h1>Welcome to the world of Fallout. </h1>
 				<button
 						className='lets-start'
-						onClick={() => console.log('open  modal')}
+						onClick={handleModalOpen}
 				>
 					Let's create your character.
 				</button>
@@ -20,4 +29,4 @@ const MainPageContainer = () => {
 	);
 };
 
-export default MainPageContainer;
+export default memo(MainPageContainer);
