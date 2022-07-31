@@ -17,7 +17,7 @@ import { initialSpecial, points, specialData } from '../../constants/index';
 const SpecialModal = () => {
 	const [availablePoints, setAvailablePoints] = useState(points);
 	const [special, setSpecial] = useState(initialSpecial);
-	const [currentAbility, setCurrentAbility] = useState('');
+	const [currentAbility, setCurrentAbility] = useState('default');
 	const [name, setName] = useState('');
 	const [isOpen, setIsOpen] = useRecoilState(specialModalState);
 

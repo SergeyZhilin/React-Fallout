@@ -5,6 +5,7 @@ import Intelligence from '../assets/img/special/intelligence.png';
 import Luck from '../assets/img/special/luck.png';
 import Perception from '../assets/img/special/perception.png';
 import Strength from '../assets/img/special/strength.png';
+import Default from '../assets/img/special/default.png';
 
 export const initialSpecial = [
 	{
@@ -102,4 +103,9 @@ export const specialData = {
 		to the subject's Luck (keep in mind, standard means without perks, traits, 
 		or aimed shots). It also determines the initial level of the Gambling skill.`
 	},
+	default : {
+		img: Default,
+		desc: `Tell us about yourself! Vault-Tec needs to know what kind of citizen
+		you are to ensure your future happiness`
+	}
 }

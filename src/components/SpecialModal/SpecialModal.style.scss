@@ -93,6 +93,11 @@
     .special-modal__right {
       margin-left: 75px;
 
+      img {
+        display: flex;
+        margin: 0 auto;
+      }
+      
       .desc {
         color: #5C5C5C;
         width: 420px;
